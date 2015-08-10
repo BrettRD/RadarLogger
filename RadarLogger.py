@@ -51,8 +51,9 @@ for location in sites['sites']:
             if "theImageNames[" in item:
                 imageUrls.append(item.split("\"")[1])
 
-
+        #prepare the arguments for the predictor
         predictorArgs = []
+	runPrediction = False
         #download the images
 #        for imageUrl in imageUrls:
         for index in range(len(imageUrls)):
@@ -60,7 +61,7 @@ for location in sites['sites']:
             print(imageUrl)
             path = saveDir + imageUrl.split(".")[5] + ".png"
             print(path)
-            
+            #only use the latest two images
             if (index+2) >= len(imageUrls):
                 predictorArgs.append(path)
             #print("predictorArgs = " + predictorArgs)
@@ -70,6 +71,10 @@ for location in sites['sites']:
                 print("skipping")
             else:
                 print("downloading")
+                #no need to run the predictor on old images
+                if (index+2) >= len(imageUrls):
+                    runPrediction = True
+
                 #file(filename, 'w').close()
                 r = requests.get(imageUrl, stream=True)
                 if r.status_code == 200:
@@ -101,6 +106,7 @@ for location in sites['sites']:
                 json.dump(paths, pathsjson,indent=4)
 
             #Call SoggyDog
-            call([predictor, predictorArgs[0], predictorArgs[1], predictorSettings])
+            if runPrediction:
+                call([predictor, predictorArgs[0], predictorArgs[1], predictorSettings])
         
 exit(0)
