@@ -1,0 +1,19 @@
+{
+	"Places":[
+		{
+			"name":"City_Centre",
+			"Lat":-31.95381,
+			"Lon":115.85880
+		},
+		{
+			"name":"Lake_Joondalup",
+			"Lat":-31.73014,
+			"Lon":115.77537
+		},
+		{
+			"name":"Artifactory",
+			"Lat":-31.90195,
+			"Lon":115.81041
+		}
+	]
+}

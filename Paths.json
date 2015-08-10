@@ -1,0 +1,30 @@
+{
+    "Paths": [
+        {
+            "Lat": -31.95381, 
+            "Lon": 115.8588, 
+            "name": "/home/pi/RadarLogger/predictions/City_Centre.png"
+        }, 
+        {
+            "Lat": -31.73014, 
+            "Lon": 115.77537, 
+            "name": "/home/pi/RadarLogger/predictions/Lake_Joondalup.png"
+        }, 
+        {
+            "Lat": -31.90195, 
+            "Lon": 115.81041, 
+            "name": "/home/pi/RadarLogger/predictions/Artifactory.png"
+        }
+    ], 
+    "Site": {
+        "Lat": -32.3917, 
+        "range": 256, 
+        "Lon": 115.8669, 
+        "period": 10
+    }, 
+    "Conf": {
+        "stepCount": 30, 
+        "stepPeriod": 1, 
+        "maxSpeed": 150
+    }
+}

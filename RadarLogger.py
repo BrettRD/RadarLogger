@@ -4,12 +4,25 @@ import json
 import requests
 from datetime import datetime, date, time
 from pprint import pprint
+from subprocess import call
 
 #information about the radar sites:
-sitesFile = "/home/pi/radar/Sites.json"
+sitesFile = "/home/pi/RadarLogger/Sites.json"
+
+#information about the users / locations we're interested in.
+usersFile = "/home/pi/RadarLogger/Users.json"
 
 #location to save the files
-saveRoot = "/mnt/backup/radar/"
+saveRoot = "/home/pi/RadarLogger/archive/"
+
+#prediction engine call
+predictor = "/home/pi/SoggyDog/C/SoggyDog"
+
+#output file for settings argument for SoggyDog
+predictorSettings = "Paths.json"
+
+#location to save the prediciton files
+predictorfolder = "/home/pi/RadarLogger/predictions/"
 
 with open(sitesFile) as sitesJson:
     sites = json.loads(sitesJson.read())
@@ -38,14 +51,24 @@ for location in sites['sites']:
             if "theImageNames[" in item:
                 imageUrls.append(item.split("\"")[1])
 
+
+        predictorArgs = []
         #download the images
-        for imageUrl in imageUrls:
+#        for imageUrl in imageUrls:
+        for index in range(len(imageUrls)):
+            imageUrl = imageUrls[index]
             print(imageUrl)
             path = saveDir + imageUrl.split(".")[5] + ".png"
             print(path)
+            
+            if (index+2) >= len(imageUrls):
+                predictorArgs.append(path)
+            #print("predictorArgs = " + predictorArgs)
 
             #only download each one once
-            if not os.path.exists(path):
+            if os.path.exists(path):
+                print("skipping")
+            else:
                 print("downloading")
                 #file(filename, 'w').close()
                 r = requests.get(imageUrl, stream=True)
@@ -53,8 +76,31 @@ for location in sites['sites']:
                     with open(path, 'wb') as f:
                         for chunk in r.iter_content():
                             f.write(chunk)
-            else:
-                print("skipping")
-        
+
+        if loops['type'] == 'Rain':
+            #build a Paths.json file for SoggyDog:
+            with open('Users.json') as usersJson:
+                    users = json.loads(usersJson.read())
+            with open(predictorSettings, 'w') as pathsjson:
+                paths = {'Paths':[], 'Site':{}, 'Conf':{}}
+
+                for place in users['Places']:
+                    place['name'] = predictorfolder + place['name'] + ".png"
+                    paths['Paths'].append(place)
+
+                #add site info
+                paths['Site']['range'] = loops['range']
+                paths['Site']['Lat'] = location['lat']
+                paths['Site']['Lon'] = location['lon']
+                paths['Site']['period'] = location['period']
+                #add config info
+                paths['Conf']['stepCount'] = 30
+                paths['Conf']['stepPeriod'] = 1
+                paths['Conf']['maxSpeed'] = 150
+                
+                json.dump(paths, pathsjson,indent=4)
+
+            #Call SoggyDog
+            call([predictor, predictorArgs[0], predictorArgs[1], predictorSettings])
         
 exit(0)
