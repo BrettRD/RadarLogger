@@ -5,6 +5,7 @@ import requests
 from datetime import datetime, date, time
 from pprint import pprint
 from subprocess import call
+from display import genhtml
 
 #information about the radar sites:
 sitesFile = "/home/pi/RadarLogger/Sites.json"
@@ -19,10 +20,17 @@ saveRoot = "/home/pi/RadarLogger/archive/"
 predictor = "/home/pi/SoggyDog/C/SoggyDog"
 
 #output file for settings argument for SoggyDog
-predictorSettings = "Paths.json"
+predictorSettings = "/home/pi/RadarLogger/Paths.json"
+
+#location to add to the url
+webfolder = "predictions/"
+
+htmlfile = "/var/www/soggydog.html"
 
 #location to save the prediciton files
-predictorfolder = "/home/pi/RadarLogger/predictions/"
+predictorfolder = "/var/www/" + webfolder
+#predictorfolder = "/home/pi/RadarLogger/predictions/"
+
 
 with open(sitesFile) as sitesJson:
     sites = json.loads(sitesJson.read())
@@ -53,13 +61,14 @@ for location in sites['sites']:
 
         #prepare the arguments for the predictor
         predictorArgs = []
-	runPrediction = False
+        runPrediction = False
         #download the images
 #        for imageUrl in imageUrls:
         for index in range(len(imageUrls)):
             imageUrl = imageUrls[index]
             print(imageUrl)
-            path = saveDir + imageUrl.split(".")[5] + ".png"
+            timestamp = imageUrl.split(".")[5]
+            path = saveDir + timestamp + ".png"
             print(path)
             #only use the latest two images
             if (index+2) >= len(imageUrls):
@@ -84,29 +93,46 @@ for location in sites['sites']:
 
         if loops['type'] == 'Rain':
             #build a Paths.json file for SoggyDog:
-            with open('Users.json') as usersJson:
-                    users = json.loads(usersJson.read())
-            with open(predictorSettings, 'w') as pathsjson:
+            with open(usersFile) as usersJson:
+                users = json.loads(usersJson.read())
+                
                 paths = {'Paths':[], 'Site':{}, 'Conf':{}}
 
                 for place in users['Places']:
-                    place['name'] = predictorfolder + place['name'] + ".png"
+                    imgName = place['name'] + timestamp + ".png"
+                    place['OutFile'] = predictorfolder + imgName
+                    place['WebFile'] = webfolder + imgName
+#                    place['OutFile'] = predictorfolder + place['name'] + timestamp + ".png"
                     paths['Paths'].append(place)
 
                 #add site info
                 paths['Site']['range'] = loops['range']
+                paths['Site']['URL'] = loops['URL']
+                paths['Site']['prefix'] = loops['prefix']
+                paths['Site']['description'] = loops['description']
+                paths['Site']['name'] = location['name']
                 paths['Site']['Lat'] = location['lat']
                 paths['Site']['Lon'] = location['lon']
                 paths['Site']['period'] = location['period']
+                paths['Site']['time'] = timestamp
+                paths['Site']['FlowFile'] = predictorfolder + loops['prefix'] + "Flow" + timestamp + ".png"
+
+
                 #add config info
                 paths['Conf']['stepCount'] = 30
                 paths['Conf']['stepPeriod'] = 1
                 paths['Conf']['maxSpeed'] = 150
                 
+            with open(predictorSettings, 'w') as pathsjson:
                 json.dump(paths, pathsjson,indent=4)
+
+            html = genhtml(paths)
+            with open(htmlfile, 'w') as displayfile:
+                displayfile.write(html)
 
             #Call SoggyDog
             if runPrediction:
                 call([predictor, predictorArgs[0], predictorArgs[1], predictorSettings])
+
         
 exit(0)

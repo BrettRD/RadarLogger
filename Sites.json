@@ -8,10 +8,10 @@
 			"loops": [
 				{
 					"prefix":"IDR703",
-					"description": "256Km"   ,
+					"description": "128Km"   ,
 					"URL": "http://www.bom.gov.au/products/IDR703.loop.shtml",
 					"type":"Rain",
-					"range":256
+					"range":128
 				}
 			]
 		}
