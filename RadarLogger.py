@@ -5,7 +5,7 @@ import requests
 from datetime import datetime, date, time
 from pprint import pprint
 from subprocess import call
-from display import genhtml
+from display import genhtml, genPredictionPage
 
 #information about the radar sites:
 sitesFile = "/home/pi/RadarLogger/Sites.json"
@@ -22,18 +22,23 @@ predictor = "/home/pi/SoggyDog/C/SoggyDog"
 #output file for settings argument for SoggyDog
 predictorSettings = "/home/pi/RadarLogger/Paths.json"
 
+
+#file system location for the output data
+webroot = "/var/www/"
+
+htmlfile = webroot + "soggydog.html"
+
 #location to add to the url
 webfolder = "predictions/"
 
-htmlfile = "/var/www/soggydog.html"
-
 #location to save the prediciton files
-predictorfolder = "/var/www/" + webfolder
+predictorfolder = webroot + webfolder
 #predictorfolder = "/home/pi/RadarLogger/predictions/"
 
 
 with open(sitesFile) as sitesJson:
     sites = json.loads(sitesJson.read())
+    sitesJson.close()
 #pprint(sites)
 
 
@@ -90,6 +95,7 @@ for location in sites['sites']:
                     with open(path, 'wb') as f:
                         for chunk in r.iter_content():
                             f.write(chunk)
+                        f.close()
 
         if loops['type'] == 'Rain':
             #build a Paths.json file for SoggyDog:
@@ -125,14 +131,23 @@ for location in sites['sites']:
                 
             with open(predictorSettings, 'w') as pathsjson:
                 json.dump(paths, pathsjson,indent=4)
-
-            html = genhtml(paths)
-            with open(htmlfile, 'w') as displayfile:
-                displayfile.write(html)
-
+                pathsjson.close()
             #Call SoggyDog
             if runPrediction:
                 call([predictor, predictorArgs[0], predictorArgs[1], predictorSettings])
+            #Update the webpage
+            html = genhtml(paths)
+            with open(htmlfile, 'w') as displayfile:
+                displayfile.write(html)
+                displayfile.close()
+
+            for place in paths['Paths']:
+                placeFile = webroot + place['name'] + ".html"
+                html = genPredictionPage(paths, place)
+                with open(placeFile, 'w') as displayfile:
+                    displayfile.write(html)
+                    displayfile.close()
+
 
         
 exit(0)
