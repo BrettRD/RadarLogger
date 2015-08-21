@@ -43,12 +43,12 @@ with open(sitesFile) as sitesJson:
 
 
 for location in sites['sites']:
-    print(location['name'])
-    print "lat: " , location['lat']
-    print "lon: " , location['lon']
+#    print(location['name'])
+#    print "lat: " , location['lat']
+#    print "lon: " , location['lon']
     for loops in location['loops']:
-        print(loops['prefix'])
-        print(loops['URL'])
+#        print(loops['prefix'])
+#        print(loops['URL'])
 
         #break it up into folders
         saveDir= saveRoot + location['name'] + "/" + loops['prefix'] + "/"
@@ -135,12 +135,15 @@ for location in sites['sites']:
             #Call SoggyDog
             if runPrediction:
                 call([predictor, predictorArgs[0], predictorArgs[1], predictorSettings])
+#                call(predictor, predictorArgs[0], predictorArgs[1], predictorSettings)
+            print("Generating landing page")
             #Update the webpage
             html = genhtml(paths)
             with open(htmlfile, 'w') as displayfile:
                 displayfile.write(html)
                 displayfile.close()
 
+            print("Generating place pages")
             for place in paths['Paths']:
                 placeFile = webroot + place['name'] + ".html"
                 html = genPredictionPage(paths, place)

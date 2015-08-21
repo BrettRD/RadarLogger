@@ -38,7 +38,8 @@ def genPredictionPage (imagelist, place):
     html += "<h3>" + place['name'] + "</h3>" 
     html += "Lat = " + str(place['Lat']) + "<br>Lon = " + str(place['Lon']) + "<br>"
     html += "Vaild as of " + imagelist['Site']['time'] + " UTC<br>"
-    html += "<img src=\"" + place['WebFile'] + "\" alt=\"Prediction for "+ place['name'] + "\" width=\"50%\"><br>"
+    html += "<img src=\" Legend.png \" width=\"20\">"
+    html += "<img src=\"" + place['WebFile'] + "\" alt=\"Prediction for "+ place['name'] + "\" width=\"600\"><br>"
     html += "Generated from <a href=\"" + imagelist['Site']['URL'] + "\">" + imagelist['Site']['name'] + " " + imagelist['Site']['prefix'] + "</a><br>"
     html += "<br><br>"
 
