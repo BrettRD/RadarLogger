@@ -137,20 +137,20 @@ for location in sites['sites']:
                 call([predictor, predictorArgs[0], predictorArgs[1], predictorSettings])
                 #call(predictor, predictorArgs[0], predictorArgs[1], predictorSettings)
                 
-                print("Generating landing page")
-                #Update the webpage
-                html = genhtml(paths)
-                with open(htmlfile, 'w') as displayfile:
+            print("Generating landing page")
+            #Update the webpage
+            html = genhtml(paths)
+            with open(htmlfile, 'w') as displayfile:
+                displayfile.write(html)
+                displayfile.close()
+    
+            print("Generating place pages")
+            for place in paths['Paths']:
+                placeFile = webroot + place['name'] + ".html"
+                html = genPredictionPage(paths, place)
+                with open(placeFile, 'w') as displayfile:
                     displayfile.write(html)
                     displayfile.close()
-    
-                print("Generating place pages")
-                for place in paths['Paths']:
-                    placeFile = webroot + place['name'] + ".html"
-                    html = genPredictionPage(paths, place)
-                    with open(placeFile, 'w') as displayfile:
-                        displayfile.write(html)
-                        displayfile.close()
 
 
         

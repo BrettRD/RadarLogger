@@ -32,9 +32,10 @@ def genPredictionPage (imagelist, place):
     validyear = imagelist['Site']['time'][0:4]
     validmonth = imagelist['Site']['time'][4:6]
     validdate = imagelist['Site']['time'][6:8]
-    validhour = str(8 + int(imagelist['Site']['time'][8:10])) #hax
+    validhour = imagelist['Site']['time'][8:10]
+#    validhour = str(8 + int(imagelist['Site']['time'][8:10])) #hax
     validminute = imagelist['Site']['time'][10:12]
-    validDatestring =  str(validyear) + "-" + str(validmonth) + "-" + str(validdate) + "T" + str(validhour) + ":" + str(validminute) + ":00"
+    validDatestring =  str(validyear) + "-" + str(validmonth) + "-" + str(validdate) + "T" + str(validhour) + ":" + str(validminute) + ":00+00:00"
     imgpxWidth = 20
     imgwidth = imgpxWidth*imagelist['Conf']['stepCount']
     html  = "<!DOCTYPE html>"
@@ -44,6 +45,7 @@ def genPredictionPage (imagelist, place):
     #valiables
     html += "<script>\n"
     html += "validFrom = new Date(\"" + validDatestring + "\");\n"
+    #html += "validFrom = Date.parse(\"" + validDatestring + "\");\n"
     html += "stepCount = " + str(imagelist['Conf']['stepCount'])   + "; //number of time steps in the prediciton\n"
     html += "stepPeriod = " + str(imagelist['Conf']['stepPeriod']) + "; //lenght of each time step in minutes\n"
     html += "width = " + str(imgpxWidth) + "*stepCount;    //width of the prediciton image in px\n"
@@ -63,6 +65,7 @@ def genPredictionPage (imagelist, place):
     html += "    var d = new Date();\n"
 #    html += "    document.getElementById(\"timer\").innerHTML = d.getTime() - validFrom.getTime();\n"
     html += "    var sec = Math.round((d.getTime() - validFrom.getTime())/1000);\n"
+#    html += "    var sec = Math.round((d.UTC() - validFrom)/1000);\n"
 #    html += "    document.getElementById(\"timer\").innerHTML = \"Seconds since prediciton: \" + sec;\n"
     html += "    timePtr.style.left = width*sec/length + 'px';\n"
     html += "}\n"
