@@ -4,7 +4,7 @@
 			"name": "Serpentine",
 			"lat":-32.3917,
 			"lon":115.8669,
-			"period":10,
+			"period":6,
 			"loops": [
 				{
 					"prefix":"IDR703",

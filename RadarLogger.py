@@ -72,7 +72,7 @@ for location in sites['sites']:
         for index in range(len(imageUrls)):
             imageUrl = imageUrls[index]
             print(imageUrl)
-            timestamp = imageUrl.split(".")[5]
+            timestamp = imageUrl.split(".")[6]
             path = saveDir + timestamp + ".png"
             print(path)
             #only use the latest two images
