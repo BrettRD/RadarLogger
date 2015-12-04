@@ -37,11 +37,24 @@ def genPredictionPage (imagelist, place):
     validminute = imagelist['Site']['time'][10:12]
     validDatestring =  str(validyear) + "-" + str(validmonth) + "-" + str(validdate) + "T" + str(validhour) + ":" + str(validminute) + ":00+00:00"
     imgpxWidth = 20
-    imgwidth = imgpxWidth*imagelist['Conf']['stepCount']
+    imgWidth = imgpxWidth*imagelist['Conf']['stepCount']
+    flowimgwidth = 100
     html  = "<!DOCTYPE html>"
     html += "<html>"
+    html += "<head>"
+    html += "<style type=\"text/css\">"
+    html += "table td{"
+    html += "    border:none;"
+    html += "    padding:0px;"
+    html += "}"
+    html += "table{"
+    html += "    border:none;"
+    html += "    border-collapse:collapse;"
+    html += "    border-spacing:0px;"
+    html += "}"
+    html += "</style>"
+    html += "</head>"
     html += "<body>"
-
     #valiables
     html += "<script>\n"
     html += "validFrom = new Date(\"" + validDatestring + "\");\n"
@@ -79,13 +92,22 @@ def genPredictionPage (imagelist, place):
     #display stuff
     html += "<h2>SoggyDog Prediction Results</h2>\n"
     html += "<p>\n"
+    
     html += "<h3>" + place['name'] + "</h3>\n"
+    html += "<table>"
+    html += "<tr><td style=\"width:" + str(imgpxWidth + imgWidth - flowimgwidth) + "px;\">" 
     html += "Lat = " + str(place['Lat']) + "<br>Lon = " + str(place['Lon']) + "<br>\n"
-    html += "Vaild as of " + imagelist['Site']['time'] + " UTC<br>\n"
+    html += "Vaild as of " + imagelist['Site']['time'] + " UTC\n"
+    html += "</td>"
+
+    html += "<td style=\"width:" + str(flowimgwidth) + "px;\"><img src=\"" + imagelist['Site']['WebFlowFile'] + "\" alt=\"Wind Estimate\" width=\"" + str(flowimgwidth) + "\" >\n</td></tr>"
+
+    html += "<tr><td colspan=\"2\" style=\"width:" + str(imgpxWidth + imgWidth) + "px;\">"
     html += "<img src=\" Legend.png \" width=\"" + str(imgpxWidth) + "\">"
-    html += "<img src=\"" + place['WebFile'] + "\" alt=\"Prediction for "+ place['name'] + "\" width=\"" + str(imgwidth) + "\">\n"
+    html += "<img src=\"" + place['WebFile'] + "\" alt=\"Prediction for "+ place['name'] + "\" width=\"" + str(imgWidth) + "\">\n"
     #html += "<p id=\"nowMark\">^</p>\n"
     html += "<p id=\"nowMark\"></p>\n"
+    html += "</td></tr></table>"
     html += "Generated from <a href=\"" + imagelist['Site']['URL'] + "\">" + imagelist['Site']['name'] + " " + imagelist['Site']['prefix'] + "</a><br>\n"
     html += "<br><br>\n"
     html += "</p>\n"

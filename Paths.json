@@ -2,70 +2,71 @@
     "Paths": [
         {
             "Lat": -31.95381, 
-            "OutFile": "/var/www/predictions/City_Centre201508220650.png", 
+            "OutFile": "/var/www/predictions/City_CentreT.png", 
             "Lon": 115.8588, 
             "name": "City_Centre", 
-            "WebFile": "predictions/City_Centre201508220650.png"
+            "WebFile": "predictions/City_CentreT.png"
         }, 
         {
             "Lat": -31.73014, 
-            "OutFile": "/var/www/predictions/Lake_Joondalup201508220650.png", 
+            "OutFile": "/var/www/predictions/Lake_JoondalupT.png", 
             "Lon": 115.77537, 
             "name": "Lake_Joondalup", 
-            "WebFile": "predictions/Lake_Joondalup201508220650.png"
+            "WebFile": "predictions/Lake_JoondalupT.png"
         }, 
         {
             "Lat": -31.90195, 
-            "OutFile": "/var/www/predictions/Artifactory201508220650.png", 
+            "OutFile": "/var/www/predictions/ArtifactoryT.png", 
             "Lon": 115.81041, 
             "name": "Artifactory", 
-            "WebFile": "predictions/Artifactory201508220650.png"
+            "WebFile": "predictions/ArtifactoryT.png"
         }, 
         {
             "Lat": -32.00571, 
-            "OutFile": "/var/www/predictions/Curtin_Uni201508220650.png", 
+            "OutFile": "/var/www/predictions/Curtin_UniT.png", 
             "Lon": 115.89263, 
             "name": "Curtin_Uni", 
-            "WebFile": "predictions/Curtin_Uni201508220650.png"
+            "WebFile": "predictions/Curtin_UniT.png"
         }, 
         {
             "Lat": -31.98015, 
-            "OutFile": "/var/www/predictions/UWA201508220650.png", 
+            "OutFile": "/var/www/predictions/UWAT.png", 
             "Lon": 115.81788, 
             "name": "UWA", 
-            "WebFile": "predictions/UWA201508220650.png"
+            "WebFile": "predictions/UWAT.png"
         }, 
         {
             "Lat": -32.05182, 
-            "OutFile": "/var/www/predictions/Fremantle_Train_Station201508220650.png", 
+            "OutFile": "/var/www/predictions/Fremantle_Train_StationT.png", 
             "Lon": 115.74547, 
             "name": "Fremantle_Train_Station", 
-            "WebFile": "predictions/Fremantle_Train_Station201508220650.png"
+            "WebFile": "predictions/Fremantle_Train_StationT.png"
         }, 
         {
             "Lat": -31.95672, 
-            "OutFile": "/var/www/predictions/Mundaring_Weir201508220650.png", 
+            "OutFile": "/var/www/predictions/Mundaring_WeirT.png", 
             "Lon": 116.16505, 
             "name": "Mundaring_Weir", 
-            "WebFile": "predictions/Mundaring_Weir201508220650.png"
+            "WebFile": "predictions/Mundaring_WeirT.png"
         }, 
         {
             "Lat": -31.99468, 
-            "OutFile": "/var/www/predictions/Rottnest201508220650.png", 
+            "OutFile": "/var/www/predictions/RottnestT.png", 
             "Lon": 115.54079, 
             "name": "Rottnest", 
-            "WebFile": "predictions/Rottnest201508220650.png"
+            "WebFile": "predictions/RottnestT.png"
         }
     ], 
     "Site": {
         "name": "Serpentine", 
-        "FlowFile": "/var/www/predictions/IDR703Flow201508220650.png", 
+        "FlowFile": "/var/www/predictions/IDR703FlowT.png", 
         "URL": "http://www.bom.gov.au/products/IDR703.loop.shtml", 
+        "WebFlowFile": "predictions/IDR703FlowT.png", 
         "Lon": 115.8669, 
         "prefix": "IDR703", 
         "period": 10, 
         "range": 128, 
-        "time": "201508220650", 
+        "time": "T", 
         "Lat": -32.3917, 
         "description": "128Km"
     }, 
