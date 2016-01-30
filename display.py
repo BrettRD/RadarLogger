@@ -55,9 +55,10 @@ def genPredictionPage (imagelist, place):
     html += "</style>"
     html += "</head>"
     html += "<body>"
-    #valiables
+    #variables
     html += "<script>\n"
     html += "validFrom = new Date(\"" + validDatestring + "\");\n"
+    html += "refreshtime = " + str(imagelist['Site']['period']) + "; //minutes per prediction for autorefresh\n"
     #html += "validFrom = Date.parse(\"" + validDatestring + "\");\n"
     html += "stepCount = " + str(imagelist['Conf']['stepCount'])   + "; //number of time steps in the prediciton\n"
     html += "stepPeriod = " + str(imagelist['Conf']['stepPeriod']) + "; //lenght of each time step in minutes\n"
@@ -72,18 +73,30 @@ def genPredictionPage (imagelist, place):
     html += "    timePtr.style.position= 'relative';\n"
     html += "    timePtr.style.left = '0px'; \n"
     html += "    timePtr.innerHTML = \"^\"; \n"
-    html += "    refreshDate();\n"
+    html += "    adjustpointer();\n"
+    html += "    reloadseconds = Math.max((refreshtime*60) - imageage() + 300, 300);\n"
+    html += "    setTimeout(reloadpage, reloadseconds*1000);\n"
     html += "}\n"
-    html += "function refreshDate(){\n"
+
+    html += "function reloadpage(){\n"
+    html += "        window.location.reload(true);\n"
+    html += "}\n"
+
+    html += "function imageage(){\n"
     html += "    var d = new Date();\n"
 #    html += "    document.getElementById(\"timer\").innerHTML = d.getTime() - validFrom.getTime();\n"
     html += "    var sec = Math.round((d.getTime() - validFrom.getTime())/1000);\n"
 #    html += "    var sec = Math.round((d.UTC() - validFrom)/1000);\n"
-#    html += "    document.getElementById(\"timer\").innerHTML = \"Seconds since prediciton: \" + sec;\n"
-    html += "    timePtr.style.left = width*sec/length + 'px';\n"
+    html += "    return sec;\n"
     html += "}\n"
+
+    html += "function adjustpointer(){\n"
+    html += "    timePtr.style.left = (imageage()*width)/length + 'px';\n"
+#    html += "    document.getElementById(\"timer\").innerHTML = \"Seconds since prediciton: \" + sec;\n"
+    html += "}\n"
+
     html += "window.onload = init;\n"
-    html += "setInterval(refreshDate, 1000);\n"
+    html += "setInterval(adjustpointer, 1000);\n"
     html += "</script>\n"
 
 
@@ -93,19 +106,18 @@ def genPredictionPage (imagelist, place):
     html += "<h2>SoggyDog Prediction Results</h2>\n"
     html += "<p>\n"
     
-    html += "<h3>" + place['name'] + "</h3>\n"
     html += "<table>"
     html += "<tr><td style=\"width:" + str(imgpxWidth + imgWidth - flowimgwidth) + "px;\">" 
+    html += "<h3>" + place['name'] + "</h3>"
     html += "Lat = " + str(place['Lat']) + "<br>Lon = " + str(place['Lon']) + "<br>\n"
     html += "Vaild as of " + imagelist['Site']['time'] + " UTC\n"
     html += "</td>"
 
-    html += "<td style=\"width:" + str(flowimgwidth) + "px;\"><img src=\"" + imagelist['Site']['WebFlowFile'] + "\" alt=\"Wind Estimate\" width=\"" + str(flowimgwidth) + "\" >\n</td></tr>"
+    html += "<td style=\"width:" + str(flowimgwidth) + "px;\"><img src=\"" + imagelist['Site']['WebFlowFile'] + "\" title=\"Wind Estimate\" alt=\"Wind Estimate\" width=\"" + str(flowimgwidth) + "\" >\n</td></tr>"
 
     html += "<tr><td colspan=\"2\" style=\"width:" + str(imgpxWidth + imgWidth) + "px;\">"
     html += "<img src=\" Legend.png \" width=\"" + str(imgpxWidth) + "\">"
     html += "<img src=\"" + place['WebFile'] + "\" alt=\"Prediction for "+ place['name'] + "\" width=\"" + str(imgWidth) + "\">\n"
-    #html += "<p id=\"nowMark\">^</p>\n"
     html += "<p id=\"nowMark\"></p>\n"
     html += "</td></tr></table>"
     html += "Generated from <a href=\"" + imagelist['Site']['URL'] + "\">" + imagelist['Site']['name'] + " " + imagelist['Site']['prefix'] + "</a><br>\n"
