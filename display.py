@@ -110,7 +110,7 @@ def genPredictionPage (imagelist, place):
     html += "<tr><td style=\"width:" + str(imgpxWidth + imgWidth - flowimgwidth) + "px;\">" 
     html += "<h3>" + place['name'] + "</h3>"
     html += "Lat = " + str(place['Lat']) + "<br>Lon = " + str(place['Lon']) + "<br>\n"
-    html += "Vaild as of " + imagelist['Site']['time'] + " UTC\n"
+    html += "Valid as of " + imagelist['Site']['time'] + " UTC\n"
     html += "</td>"
 
     html += "<td style=\"width:" + str(flowimgwidth) + "px;\"><img src=\"" + imagelist['Site']['WebFlowFile'] + "\" title=\"Wind Estimate\" alt=\"Wind Estimate\" width=\"" + str(flowimgwidth) + "\" >\n</td></tr>"
