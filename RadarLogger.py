@@ -2,34 +2,48 @@
 import os
 import json
 import requests
+import sys
 from datetime import datetime, date, time
 from pprint import pprint
 from subprocess import call
 from display import genhtml, genPredictionPage
 
-#information about the radar sites:
-sitesFile = "/home/pi/RadarLogger/Sites.json"
+configfile = sys.argv[1]
+#print configfile
 
+with open(configfile) as configJson:
+    configs = json.loads(configJson.read())
+    configJson.close()
+
+#information about the radar sites:
+#sitesFile = "/home/pi/RadarLogger/Sites.json"
+sitesFile = configs['sitesFile']
 #information about the users / locations we're interested in.
-usersFile = "/home/pi/RadarLogger/Users.json"
+#usersFile = "/home/pi/RadarLogger/Users.json"
+usersFile = configs['usersFile']
 
 #location to save the files
-saveRoot = "/home/pi/RadarLogger/archive/"
+#saveRoot = "/home/pi/RadarLogger/archive/"
+saveRoot = configs['saveRoot']
 
 #prediction engine call
-predictor = "/home/pi/SoggyDog/C/SoggyDog"
+#predictor = "/home/pi/SoggyDog/C/SoggyDog"
+predictor = configs['predictor']
 
 #output file for settings argument for SoggyDog
-predictorSettings = "/home/pi/RadarLogger/Paths.json"
-
+#predictorSettings = "/home/pi/RadarLogger/Paths.json"
+predictorSettings = configs['predictorSettings']
 
 #file system location for the output data
-webroot = "/var/www/"
+#webroot = "/var/www/"
+webroot = configs['webroot']
 
-htmlfile = webroot + "soggydog.html"
+#htmlfile = webroot + "soggydog.html"
+htmlfile = webroot + configs['htmlfile']
 
 #location to add to the url
-webfolder = "predictions/"
+#webfolder = "predictions/"
+webfolder = configs['webfolder']
 
 #location to save the prediciton files
 predictorfolder = webroot + webfolder

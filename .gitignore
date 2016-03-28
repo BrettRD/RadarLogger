@@ -2,4 +2,5 @@ archive/
 predictions/
 *.pyc
 Paths.json
+configs.json
 
