@@ -14,6 +14,21 @@
 					"range":128
 				}
 			]
+		},
+		{
+			"name": "Melbourne",
+			"lat":-37.852,
+			"lon":144.757,
+			"period":6,
+			"loops": [
+				{
+					"prefix":"IDR023",
+					"description": "128Km"   ,
+					"URL": "http://www.bom.gov.au/products/IDR023.loop.shtml",
+					"type":"Rain",
+					"range":128
+				}
+			]
 		}
 	]
 }

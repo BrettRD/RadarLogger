@@ -1,44 +1,46 @@
 {
 	"Places":[
 		{
-			"name":"City_Centre",
+			"name":"Perth_City_Centre",
+			"site_prefix":"IDR703",
 			"Lat":-31.95381,
 			"Lon":115.85880
 		},
 		{
 			"name":"Lake_Joondalup",
+			"site_prefix":"IDR703",
 			"Lat":-31.73014,
 			"Lon":115.77537
 		},
 		{
 			"name":"Artifactory",
+			"site_prefix":"IDR703",
 			"Lat":-31.90195,
 			"Lon":115.81041
 		},
 		{
-			"name":"Curtin_Uni",
-			"Lat":-32.00571,
-			"Lon":115.89263
-		},
-		{
 			"name":"UWA",
+			"site_prefix":"IDR703",
 			"Lat":-31.98015,
 			"Lon":115.81788
 		},
 		{
 			"name":"Fremantle_Train_Station",
+			"site_prefix":"IDR703",
 			"Lat":-32.05182,
 			"Lon":115.74547
 		},
 		{
-			"name":"Mundaring_Weir",
-			"Lat":-31.95672,
-			"Lon":116.16505
-		},
-		{
 			"name":"Rottnest",
+			"site_prefix":"IDR703",
 			"Lat":-31.99468,
 			"Lon":115.54079
+		},
+		{
+			"name":"Melbourne_City_Centre",
+			"site_prefix":"IDR703",
+			"Lat":-32.05182,
+			"Lon":115.74547
 		}
 	]
 }
