@@ -119,11 +119,12 @@ for location in sites['sites']:
                 paths = {'Paths':[], 'Site':{}, 'Conf':{}}
 
                 for place in users['Places']:
-                    imgName = place['name'] + place['site_prefix'] + timestamp + ".png"
-                    place['OutFile'] = predictorfolder + imgName
-                    place['WebFile'] = webfolder + imgName
-#                    place['OutFile'] = predictorfolder + place['name'] + timestamp + ".png"
-                    paths['Paths'].append(place)
+                    if loops['prefix'] == place['site_prefix']:
+                        imgName = place['name'] + timestamp + ".png"
+                        place['OutFile'] = predictorfolder + imgName
+                        place['WebFile'] = webfolder + imgName
+#                        place['OutFile'] = predictorfolder + place['name'] + timestamp + ".png"
+                        paths['Paths'].append(place)
 
                 #add site info
                 paths['Site']['range'] = loops['range']
