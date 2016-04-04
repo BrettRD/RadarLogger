@@ -12,7 +12,7 @@ def genhtml (imagelist):
     html += "<h2>SoggyDog</h2>"
     html += "<h3>Dubious Local Weather Predictions</h3>"
     html += "<p>"
-    for place in imagelist['Paths']:
+    for place in imagelist['Places']:
         #html += "<h3>" + place['name'] + "</h3>" 
         #html += "Lat = " + str(place['Lat']) + "<br>Lon = " + str(place['Lon']) + "<br>"
         #html += "Vaild as of " + imagelist['Site']['time'] + " UTC<br>"

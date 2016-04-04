@@ -154,7 +154,7 @@ for location in sites['sites']:
                 
                 print("Generating landing page")
                 #Update the webpage
-                html = genhtml(paths)
+                html = genhtml(users)
                 with open(htmlfile, 'w') as displayfile:
                     displayfile.write(html)
                     displayfile.close()
